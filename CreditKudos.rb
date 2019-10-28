@@ -45,18 +45,23 @@ class Trainer
   def catch_kudomon
     free_kudomons_in_range = Kudomon.free_kudomons.select {|kudomon| kudomon.world == self.world && (kudomon.position.x >= self.position.x - 2 && kudomon.position.x <= self.position.x + 2) && (kudomon.position.y >= self.position.y - 2 || kudomon.position.y <= self.position.y + 2)}
     
-    position = nil
+    pos = nil
     closest = Math.sqrt((self.position.x - free_kudomons_in_range[0].position.x)**2 + (self.position.y - free_kudomons_in_range[0].position.y)**2)
     free_kudomons_in_range.each_with_index do |kudomon, index|
       if closest > Math.sqrt((self.position.x - free_kudomons_in_range[index].position.x)**2 + (self.position.y - free_kudomons_in_range[index].position.y)**2)
         closest = Math.sqrt((self.position.x - kudomon.position.x)**2 + (self.position.y - kudomon.position.y)**2)
-        position = index
+        pos = index
       end
     end
-    puts closest
-    puts position
-    caught_kudomon = free_kudomons_in_range[position]
+    if pos != nil
+      caught_kudomon = free_kudomons_in_range[pos]
+    else
+      caught_kudomon = free_kudomons_in_range[0]
+    end
+    
     caught_kudomon.free = false
+    caught_kudomon.position = self.position
+    puts caught_kudomon.position.x
     @kudomons << caught_kudomon
   end
 
@@ -75,7 +80,7 @@ end
 
 
 class Position
-  attr_reader :x, :y
+  attr_accessor :x, :y
   def initialize(x, y)
     @x = x
     @y = y
@@ -117,8 +122,8 @@ end
 position1 = Position.new(3.0, 2.4)
 position2 = Position.new(5.2, 2.4)
 position3 = Position.new(3.5,2.5)
-position4 = Position.new(3.5, 2.4)
-position5 = Position.new(1.3, 2.4)
+position4 = Position.new(3.1, 2.4)
+position5 = Position.new(1.2, 2.4)
 
 world1 = World.new("Kardo")
 kudomon1 = Kudomon.new("Sourbulb", "grass", position1, world1);
@@ -129,5 +134,6 @@ kudomon5 = Kudomon.new("Turtlox","water", position5, world1)
 
 trainer_position = Position.new(3.4, 2.4)
 trainer1 = Trainer.new("Ash", world1, trainer_position );
+
 
 binding.pry
