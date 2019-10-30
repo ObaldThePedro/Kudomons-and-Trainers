@@ -1,14 +1,35 @@
 require_relative 'Position'
 
 class Kudomon
+  SPECIES = {
+    "Sourbulb" => {
+      type: :grass
+    },
+    "Mancharred" => {
+      type: :fire
+    },
+    "Chikapu" => {
+      type: :electric
+    },
+    "Turtlox" => {
+      type: :water
+    },
+    "Olyphax" => {
+      type: :rock
+    },
+    "Ratlr" => {
+      type: :psychic
+    }
+   }
     attr_reader :species, :type, :world
     attr_accessor :position, :free, :hp, :cp
   
     @@all = []
     
-    def initialize(species, type, position, world)
+    def initialize(species, position, world)
+      raise "That species name is not allowed" if !SPECIES.has_key?(species)
       @species = species
-      @type = type
+      @type = SPECIES[species][:type]
       @position = position
       @world = world
       @hp = 100;

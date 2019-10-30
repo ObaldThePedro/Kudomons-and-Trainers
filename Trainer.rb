@@ -35,7 +35,6 @@ class Trainer
         
         caught_kudomon.free = false
         caught_kudomon.position = self.position
-        puts caught_kudomon.position.x
         @kudomons << caught_kudomon
       else
         puts "There are no free pokemons in range!"
@@ -46,7 +45,7 @@ class Trainer
       @kudomons.flatten
     end
   
-    def add_position(x, y)
+    def update_position(x, y)
       @position = Position.new(x, y)
     end
   
