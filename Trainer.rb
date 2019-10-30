@@ -32,9 +32,9 @@ class Trainer
         else
           caught_kudomon = free_kudomons_in_range[0]
         end
-        
-        caught_kudomon.free = false
-        caught_kudomon.position = self.position
+        duplicated_kudomon = caught_kudomon.duplicate()
+        duplicated_kudomon.free = false
+        duplicated_kudomon.position = self.position
         @kudomons << caught_kudomon
       else
         puts "There are no free pokemons in range!"

@@ -45,6 +45,10 @@ class Kudomon
     def self.all
       @@all
     end
+
+    def duplicate
+      kudomon =  Kudomon.new(self.species, self.position, self.world)
+    end
   
     def self.free_kudomons
       Kudomon.all.select { |kudomon| kudomon.free == true }
